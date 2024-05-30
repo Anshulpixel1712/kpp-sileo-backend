@@ -3,13 +3,12 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.ts",
-  "type": "module",
   "scripts": {
-    "dev": "tsc && nodemon dist/index.js",
+    "dev": "nodemon ./src/index.ts",
     "start": "tsc && node dist/index.js",
     "build": "tsc",
     "postbuild": "chmod +x bin/postbuild.sh && ./bin/postbuild.sh"
-  },  
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
@@ -19,6 +18,7 @@
     "express": "^4.18.2",
     "googleapis": "^109.0.1",
     "moment-timezone": "^0.5.45",
+    "ts-node": "^10.9.2",
     "tsc": "^2.0.4",
     "typescript": "^5.4.5",
     "zod": "^3.20.2"

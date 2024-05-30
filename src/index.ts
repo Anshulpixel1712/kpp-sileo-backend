@@ -1,7 +1,7 @@
 import express from "express";
 import cors from "cors";
 import { z, ZodError } from "zod";
-import sheets from "./sheetClient.js";
+import sheets from "./sheetClient";
 import moment from "moment-timezone";
 
 const SHEET_ID = process.env.SHEET_ID;
@@ -62,4 +62,5 @@ app.post("/send-message", async (req, res) => {
 });
 
 const PORT = process.env.PORT;
+
 app.listen(PORT, () => console.log(`App running on http://localhost:${PORT}`));
