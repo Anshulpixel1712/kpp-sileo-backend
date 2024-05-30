@@ -12,7 +12,11 @@ const PORT = process.env.PORT || 3000;
 
 const pageSize = 25;
 
-app.get("/", async (_: Request, res: Response) => {
+app.get("/", (req, res) => {
+  res.send("Hello World")
+})
+
+app.get("/asd", async (_: Request, res: Response) => {
   if (process.env.NODE_ENV === "production") {
     console.log("Please run this script in development mode");
     return res.send("Please run this script in development mode");
@@ -68,14 +72,14 @@ app.get("/", async (_: Request, res: Response) => {
   // write xml in public folder
   const updatedResponse = `<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
       ${allCity
-        .map((city) => {
-          return `
+      .map((city) => {
+        return `
           <url>
             <loc>https://gynoveda.com/pages/ivf-centers/${city.toLowerCase()}</loc>
           </url>
         `;
-        })
-        .join("")}
+      })
+      .join("")}
     </urlset>`;
 
   // write xml in public folder
