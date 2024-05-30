@@ -1,7 +1,7 @@
 import express from "express";
 import cors from "cors";
 import { z, ZodError } from "zod";
-import sheets from "./sheetClient";
+import sheets from "./sheetClient.mjs";
 import moment from "moment-timezone";
 
 const SHEET_ID = process.env.SHEET_ID;
@@ -54,7 +54,7 @@ app.post("/send-message", async (req, res) => {
       },
     });
     res.json({ message: "Data added successfully" });
-  } catch (error: any) {
+  } catch (error) {
     console.error("Error handling request:", error);
     const status = error instanceof ZodError ? 400 : 500;
     res.status(status).json({ error: error.message });

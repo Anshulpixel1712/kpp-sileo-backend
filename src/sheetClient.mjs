@@ -2,7 +2,7 @@ import { google } from "googleapis";
 import dotenv from "dotenv";
 dotenv.config();
 
-import key from "./secrets";
+import key from "./secrets.mjs";
 
 const client = new google.auth.JWT(
   key.client_email,
