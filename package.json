@@ -2,12 +2,12 @@
   "name": "contact-form-sheets",
   "version": "1.0.0",
   "description": "",
-  "main": "index.ts",
+  "main": "src/app.ts",
   "scripts": {
-    "dev": "nodemon ./src/index.ts",
-    "start": "tsc && node dist/index.js",
+    "dev": "nodemon ./src/app.ts",
+    "start": "tsc && node dist/app.js",
     "build": "tsc",
-    "postbuild": "chmod +x bin/postbuild.sh && ./bin/postbuild.sh"
+    "serve":"node dist/app.js"
   },
   "keywords": [],
   "author": "",
