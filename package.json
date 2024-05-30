@@ -1,0 +1,31 @@
+{
+  "name": "contact-form-sheets",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.ts",
+  "type": "module",
+  "scripts": {
+    "dev": "tsc && nodemon dist/index.js",
+    "start": "tsc && node dist/index.js",
+    "build": "tsc",
+    "postbuild": "chmod +x bin/postbuild.sh && ./bin/postbuild.sh"
+  },  
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.18.2",
+    "googleapis": "^109.0.1",
+    "moment-timezone": "^0.5.45",
+    "tsc": "^2.0.4",
+    "typescript": "^5.4.5",
+    "zod": "^3.20.2"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.17",
+    "@types/express": "^4.17.15",
+    "nodemon": "^2.0.20"
+  }
+}
