@@ -1,33 +1,27 @@
 {
-  "name": "contact-form-sheets",
+  "name": "seo-xml-gynoveda",
   "version": "1.0.0",
-  "description": "",
   "main": "src/index.ts",
-  "scripts": {
-    "dev": "nodemon --exec ts-node ./src/index.ts",
-    "start": "ts-node ./src/index.ts",
-    "build": "tsc"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "cors": "^2.8.5",
-    "dotenv": "^16.4.5",
-    "express": "^4.18.2",
-    "googleapis": "^109.0.1",
-    "moment-timezone": "^0.5.45",
-    "ts-node": "^10.9.2",
-    "tsc": "^2.0.4",
-    "typescript": "^5.4.5",
-    "zod": "^3.20.2"
+  "license": "MIT",
+  "author": {
+    "name": "palashgdev@gmail.com",
+    "url": "https://github.com/palashgdev"
   },
   "devDependencies": {
-    "@types/cors": "^2.8.17",
     "@types/express": "4.17.21",
     "@types/node": "20.12.10",
     "nodemon": "3.1.0",
     "ts-node": "10.9.2",
     "typescript": "5.4.5"
+  },
+  "scripts": {
+    "dev": "nodemon --exec ts-node ./src/index.ts",
+    "start": "ts-node ./src/index.ts",
+    "build": "tsc"
+  },
+  "dependencies": {
+    "axios": "1.6.8",
+    "dotenv": "16.4.5",
+    "express": "4.19.2"
   }
 }
