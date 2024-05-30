@@ -1,112 +1,66 @@
-import axios from "axios";
-import express, { Request, Response } from "express";
-import dotenv from "dotenv";
-import fs from "fs";
-import path from "path";
+import express from "express";
+import cors from "cors";
+import { z, ZodError } from "zod";
+import sheets from "./sheetClient";
+import moment from "moment-timezone";
 
-dotenv.config();
+const SHEET_ID = process.env.SHEET_ID;
+
+if (!SHEET_ID) {
+  throw new Error("SHEET_ID is not defined in the environment variables");
+}
 
 const app = express();
+const contactFormSchema = z.object({
+  name: z
+    .string()
+    .min(1, "Name is required")
+    .regex(/^[a-zA-Z\s]+$/, "Name can only contain letters and spaces"),
+  phoneNumber: z
+    .string()
+    .min(1, "Phone number is required")
+    .regex(
+      /^(?!9999999999$)(?!6666666666$)(?!7777777777$)(?!8888888888$)[6789]\d{9}$/,
+      "Phone number must be a valid Indian number"
+    ),
+});
+
+app.use(cors());
+app.use(express.json());
+app.use(express.static("public"));
+
+app.get("/", (req, res) => {
+  res.json({ message: "Hello World" });
+});
+
+app.post("/send-message", async (req, res) => {
+  try {
+    const body = contactFormSchema.parse(req.body);
+    const rows = Object.values(body);
+
+    const now = moment().tz("Asia/Kolkata");
+    const currentDate = now.format("DD-MM-YYYY");
+    const currentTime = now.format("hh:mm A");
+
+    rows.push(currentDate, currentTime);
+
+    await sheets.spreadsheets.values.append({
+      spreadsheetId: SHEET_ID,
+      range: "Data!A2:E2",
+      insertDataOption: "INSERT_ROWS",
+      valueInputOption: "RAW",
+      requestBody: {
+        values: [rows],
+      },
+    });
+    res.json({ message: "Data added successfully" });
+  } catch (error: any) {
+    console.error("Error handling request:", error);
+    const status = error instanceof ZodError ? 400 : 500;
+    res.status(status).json({ error: error.message });
+  }
+});
 
 const PORT = process.env.PORT || 3000;
 
-const pageSize = 25;
-
-app.get("/", (req, res) => {
-  res.send("Hello World")
-})
-
-app.get("/asd", async (_: Request, res: Response) => {
-  if (process.env.NODE_ENV === "production") {
-    console.log("Please run this script in development mode");
-    return res.send("Please run this script in development mode");
-  }
-
-  let currentPage = 1;
-
-  console.log("Fetching data from API");
-
-  const response = await axios.get(
-    `${process.env.BASE_URL}/api/ivf-centers?&pagination[page]=${currentPage}&pagination[pageSize]=${pageSize}&populate=*`,
-    {
-      headers: {
-        Authorization: "Bearer " + process.env.TOKEN,
-      },
-    }
-  );
-
-  const data = response?.data?.data;
-
-  const metaData = response?.data?.meta;
-
-  const totalPages = metaData?.pagination?.total;
-
-  const numberOfRounds = Math.ceil(totalPages / pageSize);
-
-  const totalData = [...data];
-
-  console.log("Fetching data from API from first page");
-
-  while (currentPage <= numberOfRounds) {
-    currentPage++;
-    const response = await axios.get(
-      `${process.env.BASE_URL}/api/ivf-centers?&pagination[page]=${currentPage}&pagination[pageSize]=${pageSize}&populate=*`,
-      {
-        headers: {
-          Authorization: "Bearer " + process.env.TOKEN,
-        },
-      }
-    );
-    const data = response?.data?.data;
-
-    console.log(`Fetching data from API from page ${currentPage}`);
-    totalData.push(...data);
-  }
-
-  console.log("Data fetched successfully");
-
-  const allCity = [
-    ...new Set(totalData.map((e) => e.attributes.city.data.attributes.name)),
-  ];
-
-  // write xml in public folder
-  const updatedResponse = `<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-      ${allCity
-      .map((city) => {
-        return `
-          <url>
-            <loc>https://gynoveda.com/pages/ivf-centers/${city.toLowerCase()}</loc>
-          </url>
-        `;
-      })
-      .join("")}
-    </urlset>`;
-
-  // write xml in public folder
-
-  // create public folder if not exist
-  if (!fs.existsSync("./public")) {
-    fs.mkdirSync("./public");
-  }
-
-  fs.writeFileSync("./public/sitemap.xml", updatedResponse, {});
-
-  // sitemap
-  res.send(`done`);
-});
-
-app.get("/sitemap.xml", (req, res) => {
-  return res.sendFile(
-    path.join(__dirname, "..", "./public/sitemap.xml"),
-    {},
-    (err) => {
-      if (err) {
-        res.status(404).send("File not found");
-      }
-    }
-  );
-});
-
-app.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`);
-});
+app.listen(PORT, () => console.log(`App running on http://localhost:${PORT}`));
