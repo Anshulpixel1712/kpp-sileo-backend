@@ -4,7 +4,7 @@ import { z, ZodError } from "zod";
 import sheets from "./sheetClient.mjs";
 import moment from "moment-timezone";
 
-const CLINIC_LEADS_SHEET_ID = process.env.SHEET_ID;
+const CLINIC_LEADS_SHEET_ID = process.env.CLINIC_LEADS_SHEET_ID;
 const IVF_LEADS_SHEET_ID = process.env.IVF_LEADS_SHEET_ID;
 
 if (!CLINIC_LEADS_SHEET_ID, !IVF_LEADS_SHEET_ID) {
@@ -78,7 +78,7 @@ app.post("/ivf-lead", async (req, res) => {
     rows.push(currentDate, currentTime);
 
     await sheets.spreadsheets.values.append({
-      spreadsheetId: IVF_SHEET_ID,
+      spreadsheetId: IVF_LEADS_SHEET_ID,
       range: "SEO_LEADS!A2:E2",
       insertDataOption: "INSERT_ROWS",
       valueInputOption: "RAW",
