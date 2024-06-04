@@ -15,13 +15,13 @@ const app = express();
 const contactFormSchema = z.object({
   name: z
     .string()
-    .min(1, "Name is required")
+    .optional()
     .regex(/^[a-zA-Z\s]+$/, "Name can only contain letters and spaces"),
   phoneNumber: z
     .string()
     .min(1, "Phone number is required")
     .regex(
-      /^(?!9999999999$)(?!6666666666$)(?!7777777777$)(?!8888888888$)[6789]\d{9}$/,
+      /^[6789]\d{9}$/,
       "Phone number must be a valid Indian number"
     ),
 });
