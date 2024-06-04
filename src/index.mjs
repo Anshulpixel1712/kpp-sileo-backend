@@ -7,7 +7,7 @@ import moment from "moment-timezone";
 const CLINIC_LEADS_SHEET_ID = process.env.CLINIC_LEADS_SHEET_ID;
 const IVF_LEADS_SHEET_ID = process.env.IVF_LEADS_SHEET_ID;
 
-if (!CLINIC_LEADS_SHEET_ID, !IVF_LEADS_SHEET_ID) {
+if ((!CLINIC_LEADS_SHEET_ID, !IVF_LEADS_SHEET_ID)) {
   throw new Error("SHEET_ID is not defined in the environment variables");
 }
 
@@ -15,15 +15,12 @@ const app = express();
 const contactFormSchema = z.object({
   name: z
     .string()
-    .optional()
-    .regex(/^[a-zA-Z\s]+$/, "Name can only contain letters and spaces"),
+    .regex(/^[a-zA-Z\s]+$/, "Name can only contain letters and spaces")
+    .optional(),
   phoneNumber: z
     .string()
     .min(1, "Phone number is required")
-    .regex(
-      /^[6789]\d{9}$/,
-      "Phone number must be a valid Indian number"
-    ),
+    .regex(/^[6789]\d{9}$/, "Phone number must be a valid Indian number"),
 });
 
 app.use(cors());
@@ -64,7 +61,6 @@ app.post("/clinic_leads", async (req, res) => {
 app.get("/clinic_leads", (req, res) => {
   res.json({ message: "Clinic Leads Api Is Working" });
 });
-
 
 app.post("/ivf-lead", async (req, res) => {
   try {
