@@ -7,7 +7,7 @@ import moment from "moment-timezone";
 const CLINIC_LEADS_SHEET_ID = process.env.CLINIC_LEADS_SHEET_ID;
 const IVF_LEADS_SHEET_ID = process.env.IVF_LEADS_SHEET_ID;
 
-if ((!CLINIC_LEADS_SHEET_ID, !IVF_LEADS_SHEET_ID)) {
+if (!CLINIC_LEADS_SHEET_ID || !IVF_LEADS_SHEET_ID) {
   throw new Error("SHEET_ID is not defined in the environment variables");
 }
 
@@ -21,6 +21,8 @@ const contactFormSchema = z.object({
     .string()
     .min(1, "Phone number is required")
     .regex(/^[6789]\d{9}$/, "Phone number must be a valid Indian number"),
+  consultingFor: z.enum(["Male", "Female", "Couple"]).optional(),
+  parentUrl: z.string().url().optional(),
 });
 
 app.use(cors());
@@ -75,7 +77,7 @@ app.post("/ivf-lead", async (req, res) => {
 
     await sheets.spreadsheets.values.append({
       spreadsheetId: IVF_LEADS_SHEET_ID,
-      range: "SEO_LEADS!A2:E2",
+      range: "SEO_LEADS!A2:F2",
       insertDataOption: "INSERT_ROWS",
       valueInputOption: "RAW",
       requestBody: {
