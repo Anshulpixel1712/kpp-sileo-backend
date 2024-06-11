@@ -21,7 +21,7 @@ const contactFormSchema = z.object({
     .string()
     .min(1, "Phone number is required")
     .regex(/^[6789]\d{9}$/, "Phone number must be a valid Indian number"),
-  consultingFor: z.enum(["Male", "Female", "Couple"]).optional(),
+  consultingFor: z.enum(["Male", "Female", "Couple", "-"]).optional(),
   parentUrl: z.string().url().optional(),
 });
 
