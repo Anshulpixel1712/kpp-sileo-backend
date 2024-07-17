@@ -29,4 +29,7 @@ export const clinicLeadsSchema = z.object({
    tryingBaby: z.enum(["Below 1 Year", "1-5 Years", "Above 5 Years", "Not Planning", "-"]).optional(),
    consultedDoctor: z.enum(["Yes", "No", "-"]).optional(),
    parentUrl: z.string().url().optional(),
+   utm_source: z.string().optional(),
+   utm_medium: z.string().optional(),
+   utm_campaign: z.string().optional(),
 });
