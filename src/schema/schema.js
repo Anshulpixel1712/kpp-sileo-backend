@@ -32,4 +32,5 @@ export const clinicLeadsSchema = z.object({
    utm_source: z.string().optional(),
    utm_medium: z.string().optional(),
    utm_campaign: z.string().optional(),
+   gclid: z.string().optional(),
 });
