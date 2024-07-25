@@ -14,9 +14,7 @@ export const contactFormSchema = z.object({
    tryingBaby: z.enum(["Below 1 Year", "1-5 Years", "above 5 Year", "Not Planning", "-"]).optional(),
    parentUrl: z.string().url().optional(),
 });
-
-
-export const clinicLeadsSchema = z.object({
+export const ivfJourneyLeadsSchema = z.object({
    name: z
       .string()
       .regex(/^[a-zA-Z\s]+$/, "Name can only contain letters and spaces")
@@ -33,4 +31,18 @@ export const clinicLeadsSchema = z.object({
    utm_medium: z.string().optional(),
    utm_campaign: z.string().optional(),
    gclid: z.string().optional(),
+   utm_term: z.string().optional(),
+})
+
+export const clinicLeadsSchema = z.object({
+   phoneNumber: z
+      .string()
+      .min(1, "Phone number is required")
+      .regex(/^[6789]\d{9}$/, "Phone number must be a valid Indian number"),
+   parentUrl: z.string().url().optional(),
+   utm_source: z.string().optional(),
+   utm_medium: z.string().optional(),
+   utm_campaign: z.string().optional(),
+   gclid: z.string().optional(),
+   utm_term: z.string().optional(),
 });

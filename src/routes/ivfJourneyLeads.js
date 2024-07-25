@@ -3,13 +3,13 @@ import { ZodError } from "zod";
 import sheets from "../sheetClient.mjs";
 import moment from "moment-timezone";
 import { IVF_JOURNEY_LEADS } from '../privateVariables.js';
-import { clinicLeadsSchema } from '../schema/schema.js';
+import { ivfJourneyLeadsSchema } from '../schema/schema.js';
 
 const router = express.Router();
 
 router.post("/", async (req, res) => {
    try {
-      const body = clinicLeadsSchema.parse(req.body);
+      const body = ivfJourneyLeadsSchema.parse(req.body);
       const rows = Object.values(body);
 
       const now = moment().tz("Asia/Kolkata");
