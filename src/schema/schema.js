@@ -50,12 +50,14 @@ export const clinicLeadsSchema = z.object({
 
 export const fertilityCallbackSchema = z.object({
    name: z
-      .string()
-      .regex(/^[a-zA-Z\s]+$/, "Name can only contain letters and spaces")
+      .union([
+         z.string().regex(/^[a-zA-Z\s-]+$/, "Name can only contain letters, spaces, and dashes"),
+         z.literal(''),
+      ])
       .optional(),
    phoneNumber: z
       .union([
-         z.string().regex(/^[6789]\d{9}$/, "Phone number must be a valid Indian number"),
+         z.string().regex(/^[6789]\d{9}$|^-$/, "Phone number must be a valid Indian number or a dash"),
          z.literal(''),
       ])
       .optional(),
