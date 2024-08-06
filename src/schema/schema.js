@@ -56,7 +56,6 @@ export const fertilityCallbackSchema = z.object({
    phoneNumber: z
       .string()
       .min(1, "Phone number is required")
-      .optional()
       .regex(/^[6789]\d{9}$/, "Phone number must be a valid Indian number"),
    tryingBaby: z.enum(["Less than a year", "More than a year", "Not Planning", "-"]).optional(),
    issueFacing: z.enum(["PCOS/PCOD Issue", "Low AMH Issue", "Other Issue"]).optional(),
