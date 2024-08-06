@@ -3,6 +3,7 @@ import cors from "cors";
 import clinicLeadsRouter from "./routes/clinicLeads.js";
 import ivfLeadsRouter from "./routes/ivfLeads.js";
 import ivfJourneyLeadsRouter from "./routes/ivfJourneyLeads.js";
+import fertilityCallbackLeadRouter from "./routes/fertilityCallbackLead.js";
 
 const app = express();
 
@@ -17,6 +18,7 @@ app.get("/", (req, res) => {
 app.use("/clinic_leads", clinicLeadsRouter);
 app.use("/ivf-lead", ivfLeadsRouter);
 app.use("/ivf-journey-leads", ivfJourneyLeadsRouter);
+app.use("/fertility-callback-lead", fertilityCallbackLeadRouter);
 
 const PORT = process.env.PORT || 3000;
 
