@@ -51,20 +51,20 @@ export const clinicLeadsSchema = z.object({
 export const fertilityCallbackSchema = z.object({
    name: z
       .union([
-         z.string().regex(/^[a-zA-Z\s-]+$/, "Name can only contain letters, spaces, and dashes"),
+         z.string().regex(/^[a-zA-Z\s-]+$/, "Name can only contain letters and spaces"),
          z.literal(''),
       ])
       .optional(),
    phoneNumber: z
       .union([
-         z.string().regex(/^[6789]\d{9}$|^-$/, "Phone number must be a valid Indian number or a dash"),
+         z.string().regex(/^[6789]\d{9}$|^-$/, "Phone number must be a valid Indian number"),
          z.literal(''),
       ])
       .optional(),
-   tryingBaby: z.enum(["Less than a year", "More than a year", "Not Planning", "-"]).optional(),
-   issueFacing: z.enum(["PCOS/PCOD Issue", "Low AMH Issue", "Other Issue"]).optional(),
-   spokenDoctor: z.enum(["Yes", "No", "-"]).optional(),
-   consultedDoctor: z.enum(["Yes", "No", "-"]).optional(),
+   tryingBaby: z.enum(["Less than a year", "More than a year", "Not Planning", ""]).optional(),
+   issueFacing: z.enum(["PCOS/PCOD Issue", "Low AMH Issue", "Other Issue", ""]).optional(),
+   spokenDoctor: z.enum(["Yes", "No", ""]).optional(),
+   consultedDoctor: z.enum(["Yes", "No", ""]).optional(),
    parentUrl: z.string().url().optional(),
    utm_source: z.string().optional(),
    utm_medium: z.string().optional(),
