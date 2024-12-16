@@ -1,9 +1,6 @@
 import express from "express";
 import cors from "cors";
-import clinicLeadsRouter from "./routes/clinicLeads.js";
-import ivfLeadsRouter from "./routes/ivfLeads.js";
-import ivfJourneyLeadsRouter from "./routes/ivfJourneyLeads.js";
-import fertilityCallbackLeadRouter from "./routes/fertilityCallbackLead.js";
+import contactRouter from "./routes/contact.js";
 
 const app = express();
 
@@ -15,10 +12,7 @@ app.get("/", (req, res) => {
   res.json({ message: "Hello World" });
 });
 
-app.use("/clinic_leads", clinicLeadsRouter);
-app.use("/ivf-lead", ivfLeadsRouter);
-app.use("/ivf-journey-leads", ivfJourneyLeadsRouter);
-app.use("/fertility-callback-lead", fertilityCallbackLeadRouter);
+app.use("/contact-lead", contactRouter);
 
 const PORT = process.env.PORT || 3000;
 
